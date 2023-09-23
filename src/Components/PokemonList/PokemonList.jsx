@@ -2,6 +2,7 @@ import './PokemonList.css'
 import React from 'react'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import Pokemon from '../Pokemon/Pokemon.jsx'
 
 const PokemonList = () => {
 
@@ -13,7 +14,7 @@ const PokemonList = () => {
         
         console.log( response.data)
 
-        const pokemonResults = response.data.results;
+        const pokemonResult = response.data.results;
 
         const pokemonPromise = pokemonResult.map((pokemon) => axios.get(pokemon.url));
 
@@ -30,6 +31,7 @@ const PokemonList = () => {
         })
 
         setpokemonList(pokemonFinalList);
+        console.log(pokemonList)
 
 
     }
@@ -40,7 +42,10 @@ const PokemonList = () => {
 
   return (
     <div className='pokemon-list-wrapper'>
-        
+        <div> <h1>Pokemon List</h1></div>
+        <div className='pokemon-list'>
+        {pokemonList.map(pokemon => <Pokemon name={pokemon.name} key={pokemon.id} url={pokemon.image} />)}
+        </div>
     </div>
   )
 }

@@ -43,6 +43,9 @@ const PokemonList = () => {
   return (
     <div className='pokemon-list-wrapper'>
         <div> <h1>Pokemon List</h1></div>
+
+    
+
         <div className='pokemon-list'>
         {pokemonList.map(pokemon => <Pokemon name={pokemon.name} key={pokemon.id} url={pokemon.image} />)}
         </div>

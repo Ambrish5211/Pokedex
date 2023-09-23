@@ -6,13 +6,21 @@ import Pokemon from '../Pokemon/Pokemon.jsx'
 
 const PokemonList = () => {
 
-    const [pokemonList, setpokemonList] = useState([])
-    const POKEDOX_URL = "https://pokeapi.co/api/v2/pokemon";
+    const DEFAULT_URL = "https://pokeapi.co/api/v2/pokemon";
+
+    const [pokemonList, setpokemonList] = useState([]);
+
+    const [pokedexUrl, setpokedexUrl] = useState(DEFAULT_URL)
+
+    const[nextUrl, setnextUrl] = useState(DEFAULT_URL)
+    
+    const[prevUrl, setprevUrl] = useState(DEFAULT_URL)
 
     async function downloadPokemon () {
-        const response = await axios.get(POKEDOX_URL);
+        const response = await axios.get(pokedexUrl ? pokedexUrl : DEFAULT_URL);
         
-        console.log( response.data)
+        setnextUrl(response.data.next);
+        setprevUrl(response.data.previous);
 
         const pokemonResult = response.data.results;
 
@@ -38,12 +46,16 @@ const PokemonList = () => {
 
     useEffect(() => {
         downloadPokemon();
-    }, [])
+    }, [pokedexUrl])
 
   return (
     <div className='pokemon-list-wrapper'>
         <div> <h1>Pokemon List</h1></div>
+        <div className='page-controls'>
+            <button onClick={() => setpokedexUrl(prevUrl)} >Prev</button>
+            <button onClick={() => setpokedexUrl(nextUrl)}>Next</button>
 
+        </div>
     
 
         <div className='pokemon-list'>

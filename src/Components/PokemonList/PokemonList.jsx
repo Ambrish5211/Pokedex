@@ -24,10 +24,12 @@ const PokemonList = () => {
     })
 
     async function downloadPokemon () {
-        const response = await axios.get(pokedexUrl ? pokedexUrl : DEFAULT_URL);
+        const response = await axios.get(pokemonListState.pokedexUrl ? pokemonListState.pokedexUrl : DEFAULT_URL);
         
-        setnextUrl(response.data.next);
-        setprevUrl(response.data.previous);
+        // setnextUrl(response.data.next);
+        // setprevUrl(response.data.previous);
+
+        setpokemonListState((state) => ({...state, nextUrl: response.data.next, prevUrl: response.data.previous}))
 
         const pokemonResult = response.data.results;
 
@@ -45,28 +47,28 @@ const PokemonList = () => {
             }
         })
 
-        setpokemonList(pokemonFinalList);
-        console.log(pokemonList)
+setpokemonListState((state) => ({state, pokemonList : pokemonFinalList}));
+    
 
 
     }
 
     useEffect(() => {
         downloadPokemon();
-    }, [pokedexUrl])
+    }, [pokemonListState.pokedexUrl])
 
   return (
     <div className='pokemon-list-wrapper'>
         <div> <h1>Pokemon List</h1></div>
         <div className='page-controls'>
-            <button onClick={() => setpokedexUrl(prevUrl)} >Prev</button>
-            <button onClick={() => setpokedexUrl(nextUrl)}>Next</button>
+            <button onClick={() => setpokemonListState({...pokemonListState, pokedexUrl: pokemonListState.prevUrl})} >Prev</button>
+            <button onClick={() => setpokemonListState({...pokemonListState, pokedexUrl: pokemonListState.nextUrl})}>Next</button>
 
         </div>
     
 
         <div className='pokemon-list'>
-        {pokemonList.map(pokemon => <Pokemon name={pokemon.name} key={pokemon.id} url={pokemon.image} />)}
+        {pokemonListState.pokemonList.map(pokemon => <Pokemon name={pokemon.name} key={pokemon.id} url={pokemon.image} />)}
         </div>
     </div>
   )

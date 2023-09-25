@@ -4,7 +4,7 @@ import './PokemonDetails.css';
 import { Link } from 'react-router-dom';
 
 // Custom Hook
-import usePokemon from '../../hooks/usePokemon';
+// import usePokemon from '../../hooks/usePokemon';
 import Pokemon from '../Pokemon/Pokemon';
 
 function PokemonDetails({ pokemonName }) {

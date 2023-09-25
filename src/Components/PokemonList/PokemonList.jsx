@@ -8,13 +8,20 @@ const PokemonList = () => {
 
     const DEFAULT_URL = "https://pokeapi.co/api/v2/pokemon";
 
-    const [pokemonList, setpokemonList] = useState([]);
+    // const [pokemonList, setpokemonList] = useState([]);
 
-    const [pokedexUrl, setpokedexUrl] = useState(DEFAULT_URL)
+    // const [pokedexUrl, setpokedexUrl] = useState(DEFAULT_URL)
 
-    const[nextUrl, setnextUrl] = useState(DEFAULT_URL)
+    // const[nextUrl, setnextUrl] = useState(DEFAULT_URL)
     
-    const[prevUrl, setprevUrl] = useState(DEFAULT_URL)
+    // const[prevUrl, setprevUrl] = useState(DEFAULT_URL)
+
+    const[pokemonListState, setpokemonListState] = useState({
+        pokedexUrl : DEFAULT_URL,
+        nextUrl : DEFAULT_URL,
+        prevUrl : DEFAULT_URL,
+        pokemonList : []
+    })
 
     async function downloadPokemon () {
         const response = await axios.get(pokedexUrl ? pokedexUrl : DEFAULT_URL);
